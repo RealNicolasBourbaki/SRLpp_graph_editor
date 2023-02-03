@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SRLpp Graph Editor</title>
+    <meta name="google-site-verification" content="o1Si-Q8kq-vZv-50s7gTTDatu88uGd3vVAXzM2u4tss" />
+    <meta name="description" content="Draw SRLpp graphs" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/index.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="lib/saveSvgAsPng.js"></script>
+    <script src="lib/jquery.hotkeys.js"></script>
+    <script src="shape.js"></script>
+    <script src="math.js"></script>
+    <script src="graph.js"></script>
+    <script src="info.js"></script>
+    <script src="object.js"></script>
+    <script src="core.js"></script>
+    <script src="scale.js"></script>
+    <script src="misc.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="resources/letter-s.png" />
+    <script type="application/ld+json">
+        {
+          "@context": "http://schema.org",
+          "@type": "SoftwareApplication",
+          "url": "http://csgraph.io",
+          "name": "SRLpp Graph Editor",
+          "author": {
+              "@type": "Person",
+              "name": "Nianheng Wu"
+          },
+          "description": "SRLpp graph editor",
+          "applicationCategory": "Editor",
+          "operatingSystem": "web",
+          "genre": "math"
+        }
+    </script>
+</head>
+
+<body>
+    <div id="tool">
+        <button id="button-circle">Node</button>
+        <button id="button-label">Label</button>
+        <button id="button-png">Save PNG</button>
+        <button id="button-xml">Save XML</button>
+        <button id="button-load">Load XML</button>
+        <button id="button-clear">Clear</button>
+        <span id="notice">scaling not supported in Safari (bug)
+        </span>
+        <a href="https://github.com/RealNicolasBourbaki/SRLpp_graph_editor" id="git" target="_blank">Github</a>
+    </div>
+
+    <div id="paper">
+        <div id="content"></div>
+        <svg id="box" onload="console.log('loaded');"></svg>
+    </div>
+
+    <div id="info">
+        <div class="info" id="element" style="text-align: center">none</div>
+        <div class="info-node-buttons">
+            <div class="info-node-button" id="self-loop">self-loop</div>
+            <div class="info-node-button" id="terminal">terminal</div>
+        </div>
+        <div class="info-button" id="grid">enable grid</div>
+        <div class="info-button" id="directed">enable directed</div>
+        <div class="info">id:
+            <label id="id">?</div>
+        <div class="info">x:
+            <label id="x"></label>
+            <input class="clickedit" type="text" />
+        </div>
+        <div class="info">y:
+            <label id="y"></label>
+            <input class="clickedit" type="text" />
+        </div>
+        <div class="info">radius:
+            <label id="radius"></label>
+            <input class="clickedit" type="text" />
+        </div>
+        <div class="info">text:
+            <label id="text"></label>
+            <input class="clickedit" type="text" /> </div>
+        <div class="info">text-size:
+            <label id="text-size"></label>
+            <input class="clickedit" type="text" /> </div>
+        <div class="info">from:
+            <label id="from"></label>
+        </div>
+        <div class="info">to:
+            <label id="to"></label>
+        </div>
+        <div id="guide"></div>
+    </div>
+</body>
+
+</html>
