@@ -9,12 +9,14 @@
  * @param {y position} y 
  */
 var drawNode = function (x, y) {
+    var w = 400;
+    var h = 200;
     var node = document.createElementNS(svgns, 'g');
-    var circle = drawCircle(x, y, 20, 'white', 'black', 1.5);
-    var mutator = drawMutator(x, y, 20);
+    var roundRect = drawRoundRect(x, y, w, h, 5, 'white', 'black', 1.5);
+    var mutator = drawMutator(x, y, w, h);
     var loop = drawHalfCircle(x,y, 20);
     loop.setAttribute('visibility', 'hidden');
-    var terminal = drawCircle(x, y, 15, 'transparent', 'black', 1.5);
+    var terminal = drawRoundRect(x, y, 40, 20, 5, 'transparent', 'black', 1.5);
     terminal.setAttribute('visibility', 'hidden');
 
     var text;
@@ -24,15 +26,15 @@ var drawNode = function (x, y) {
     if (recycledId >= 0) {
         node.setAttribute('id', recycledId);
         addVertex(recycledId, node);
-        text = drawText(x, yShifted, recycledId);
+        text = drawText(x + w/2, yShifted + h/2, recycledId);
     } else {
         node.setAttribute('id', serialId);
         addVertex(serialId, node);
-        text = drawText(x, yShifted, serialId);
+        text = drawText(x + w/2, yShifted + h/2, serialId);
         serialId += 1;
     }
 
-    node.appendChild(circle);
+    node.appendChild(roundRect);
     node.appendChild(text);
     node.appendChild(mutator);
     node.appendChild(loop);
@@ -42,7 +44,9 @@ var drawNode = function (x, y) {
     node.setAttribute('class', 'node');
     node.setAttribute('onmouseover', 'hoverElement(evt)');
     node.setAttribute('onmouseout', 'outElement(evt)');
-    node.setAttribute('radius', 20);
+    node.setAttribute('rx', 5);
+    node.setAttribute('width', w);
+    node.setAttribute('height', h);
     node.setAttribute('diff', 0);
     node.setAttribute('position-x', x);
     node.setAttribute('position-y', y);
@@ -55,13 +59,14 @@ var drawNode = function (x, y) {
 /**
  * Draws mutators(scaler and linker) at given position
  * @param {x position} x 
- * @param {y position} y 
- * @param {radius} radius 
+ * @param {y position} y
+ * @param {w weight} w
+ * @param {h height} h
  */
-var drawMutator = function (x, y, radius) {
+var drawMutator = function (x, y, w, h) {
     var mutator = document.createElementNS(svgns, 'g');
-    var scaler = drawScaler(x, y, radius);
-    var linker = drawLinker(x, y);
+    var scaler = drawScaler(x, y, w, h);
+    var linker = drawLinker(x+w/2, y+h/2);
     mutator.appendChild(scaler);
     mutator.appendChild(linker);
     mutator.setAttribute('id', 'mutator');
@@ -74,7 +79,7 @@ var drawMutator = function (x, y, radius) {
  * @param {y position} y 
  */
 var drawLinker = function (x, y) {
-    var linker = drawCircle(x, y, 6, 'rgb(0,255,0)', 'black', 0.5);
+    var linker = drawRoundRect(x, y, 12, 12, 6, 'rgb(0,255,0)', 'black', 0.5);
     linker.setAttribute('class', 'linker');
     linker.setAttribute('onmousedown', 'selectLinker(evt)');
 
@@ -84,19 +89,18 @@ var drawLinker = function (x, y) {
 /**
  * Draws 4 scaler nodes at given position
  * @param {x position} x 
- * @param {y position} y 
- * @param {radius} radius 
+ * @param {y position} y
  */
-var drawScaler = function (x, y, radius) {
+var drawScaler = function (x, y, w, h) {
     var scaler = document.createElementNS(svgns, 'g');
-    var scaleCircle1 = drawScalerNode(x + radius, y + radius, 'se');
-    var scaleCircle2 = drawScalerNode(x - radius, y - radius, 'nw');
-    var scaleCircle3 = drawScalerNode(x + radius, y - radius, 'ne');
-    var scaleCircle4 = drawScalerNode(x - radius, y + radius, 'sw');
-    var line1 = drawDashedLine(x - radius, y - radius, x + radius, y - radius, [2, 2], 2, 'rgb(0,122,255)');
-    var line2 = drawDashedLine(x - radius, y - radius, x - radius, y + radius, [2, 2], 2, 'rgb(0,122,255)');
-    var line3 = drawDashedLine(x + radius, y - radius, x + radius, y + radius, [2, 2], 2, 'rgb(0,122,255)');
-    var line4 = drawDashedLine(x - radius, y + radius, x + radius, y + radius, [2, 2], 2, 'rgb(0,122,255)');
+    var scaleCircle1 = drawScalerNode(x + w, y + h, 'se');
+    var scaleCircle2 = drawScalerNode(x, y, 'nw');
+    var scaleCircle3 = drawScalerNode(x + w, y, 'ne');
+    var scaleCircle4 = drawScalerNode(x, y + h, 'sw');
+    var line1 = drawDashedLine(x, y, x + w, y, [2, 2], 2, 'rgb(0,122,255)');
+    var line2 = drawDashedLine(x, y, x, y + h, [2, 2], 2, 'rgb(0,122,255)');
+    var line3 = drawDashedLine(x + w, y, x + w, y + h, [2, 2], 2, 'rgb(0,122,255)');
+    var line4 = drawDashedLine(x, y + h, x + w, y + h, [2, 2], 2, 'rgb(0,122,255)');
     scaler.appendChild(scaleCircle1);
     scaler.appendChild(scaleCircle2);
     scaler.appendChild(scaleCircle3);
@@ -121,12 +125,12 @@ var drawScaler = function (x, y, radius) {
  * @param {scaler node id} id 
  */
 var drawScalerNode = function (x, y, id) {
-    var scaleCircle = drawCircle(x, y, 5, 'rgb(0,122,255)', 'white', 0.5);
-    scaleCircle.setAttribute('onmousedown', 'selectScaler(evt)');
-    scaleCircle.setAttribute('class', 'scale-node');
-    scaleCircle.setAttribute('transform', 'matrix(1 0 0 1 0 0)');
-    scaleCircle.setAttribute('id', id);
-    return scaleCircle;
+    var scaleRoundRect = drawRoundRect(x, y, 10, 10, 5, 'rgb(0,122,255)', 'white', 0.5);
+    scaleRoundRect.setAttribute('onmousedown', 'selectScaler(evt)');
+    scaleRoundRect.setAttribute('class', 'scale-node');
+    scaleRoundRect.setAttribute('transform', 'matrix(1 0 0 1 0 0)');
+    scaleRoundRect.setAttribute('id', id);
+    return scaleRoundRect;
 };
 
 /**

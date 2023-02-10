@@ -13,6 +13,7 @@ var scale = function (dx, dy) {
     if (!isNode(selectedElement)) {
         return;
     }
+    // selected element is a node
     var radius = getRadius(selectedElement);
     var diff = Math.sqrt(dx * dx + dy * dy);
 
@@ -27,10 +28,10 @@ var scale = function (dx, dy) {
     linker.setAttribute('transform', newMatrix);
     updateXY(linker, dx / 2, dy / 2);
 
-    // change circle scale and position
-    var circle = selectedElement.children[0];
-    // change circle and node position as well
-    updateXY(circle, dx / 2, dy / 2);
+    // change roundRect scale and position
+    var roundRect = selectedElement.children[0];
+    // change roundRect and node position as well
+    updateXY(roundRect, dx / 2, dy / 2);
     updateXY(selectedElement, dx / 2, dy / 2);
     displayXY(selectedElement);
 
@@ -43,7 +44,7 @@ var scale = function (dx, dy) {
     text.setAttribute('transform', newMatrix);
     updateXY(text, dx / 2, dy / 2);
 
-    var circleMatrix = getMatrix(circle);
+    var roundRectMatrix = getMatrix(roundRect);
 
     // change scaler position
     var scaler = mutator.children[0];
@@ -61,27 +62,27 @@ var scale = function (dx, dy) {
     var lineS = scaler.children[7];
 
     if (scalerId == 'nw') {
-        var rate = (getRadius(circle) - dx / 2) / getBaseRadius(circle);
+        var rate = (getRadius(roundRect) - dx / 2) / getBaseRadius(roundRect);
 
-        circleMatrix[0] = rate;
-        circleMatrix[3] = rate;
-        circleMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        circleMatrix[5] = getAbsoluteY(circle) + dy / 2;
-        newMatrix = matrixToString(circleMatrix);
-        circle.setAttribute('transform', newMatrix);
-        updateRadius(circle, -dx / 2);
+        roundRectMatrix[0] = rate;
+        roundRectMatrix[3] = rate;
+        roundRectMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        roundRectMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
+        newMatrix = matrixToString(roundRectMatrix);
+        roundRect.setAttribute('transform', newMatrix);
+        updateRadius(roundRect, -dx / 2);
 
         // change loop and terminal
         var loop = selectedElement.children[3];
-        updateHalfCircle(selectedElement, loop, getX(circle), getY(circle), getRadius(selectedElement.children[0]));
+        updateHalfCircle(selectedElement, loop, getX(roundRect), getY(roundRect), getRadius(selectedElement.children[0]));
 
         var terminal = selectedElement.children[4];
         var terminalMatrix = getMatrix(terminal);
 
         terminalMatrix[0] = rate;
         terminalMatrix[3] = rate;
-        terminalMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        terminalMatrix[5] = getAbsoluteY(circle) + dy / 2;
+        terminalMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        terminalMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
         newMatrix = matrixToString(terminalMatrix);
         terminal.setAttribute('transform', newMatrix);
         updateRadius(terminal, -dx / 2);
@@ -126,27 +127,27 @@ var scale = function (dx, dy) {
         lineE.setAttribute('transform', matrixToString(eMatrix));
         updateXY(lineE, 0, dy / 2);
     } else if (scalerId == 'ne') {
-        var rate = (getRadius(circle) + dx / 2) / getBaseRadius(circle);
+        var rate = (getRadius(roundRect) + dx / 2) / getBaseRadius(roundRect);
 
-        circleMatrix[0] = rate;
-        circleMatrix[3] = rate;
-        circleMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        circleMatrix[5] = getAbsoluteY(circle) + dy / 2;
-        newMatrix = matrixToString(circleMatrix);
-        circle.setAttribute('transform', newMatrix);
-        updateRadius(circle, dx / 2);
+        roundRectMatrix[0] = rate;
+        roundRectMatrix[3] = rate;
+        roundRectMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        roundRectMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
+        newMatrix = matrixToString(roundRectMatrix);
+        roundRect.setAttribute('transform', newMatrix);
+        updateRadius(roundRect, dx / 2);
 
         // change loop and terminal
         var loop = selectedElement.children[3];
-        updateHalfCircle(selectedElement, loop, getX(circle), getY(circle), getRadius(selectedElement.children[0]));
+        updateHalfCircle(selectedElement, loop, getX(roundRect), getY(roundRect), getRadius(selectedElement.children[0]));
 
         var terminal = selectedElement.children[4];
         var terminalMatrix = getMatrix(terminal);
 
         terminalMatrix[0] = rate;
         terminalMatrix[3] = rate;
-        terminalMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        terminalMatrix[5] = getAbsoluteY(circle) + dy / 2;
+        terminalMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        terminalMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
         newMatrix = matrixToString(terminalMatrix);
         terminal.setAttribute('transform', newMatrix);
         updateRadius(terminal, dx / 2);
@@ -191,27 +192,27 @@ var scale = function (dx, dy) {
         lineE.setAttribute('transform', matrixToString(eMatrix));
         updateXY(lineE, dx, dy / 2);
     } else if (scalerId == 'se') {
-        var rate = (getRadius(circle) + dx / 2) / getBaseRadius(circle);
+        var rate = (getRadius(roundRect) + dx / 2) / getBaseRadius(roundRect);
 
-        circleMatrix[0] = rate;
-        circleMatrix[3] = rate;
-        circleMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        circleMatrix[5] = getAbsoluteY(circle) + dy / 2;
-        newMatrix = matrixToString(circleMatrix);
-        circle.setAttribute('transform', newMatrix);
-        updateRadius(circle, dx / 2);
+        roundRectMatrix[0] = rate;
+        roundRectMatrix[3] = rate;
+        roundRectMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        roundRectMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
+        newMatrix = matrixToString(roundRectMatrix);
+        roundRect.setAttribute('transform', newMatrix);
+        updateRadius(roundRect, dx / 2);
 
         // change loop and terminal
         var loop = selectedElement.children[3];
-        updateHalfCircle(selectedElement, loop, getX(circle), getY(circle), getRadius(selectedElement.children[0]));
+        updateHalfCircle(selectedElement, loop, getX(roundRect), getY(roundRect), getRadius(selectedElement.children[0]));
 
         var terminal = selectedElement.children[4];
         var terminalMatrix = getMatrix(terminal);
 
         terminalMatrix[0] = rate;
         terminalMatrix[3] = rate;
-        terminalMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        terminalMatrix[5] = getAbsoluteY(circle) + dy / 2;
+        terminalMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        terminalMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
         newMatrix = matrixToString(terminalMatrix);
         terminal.setAttribute('transform', newMatrix);
         updateRadius(terminal, dx / 2);
@@ -256,27 +257,27 @@ var scale = function (dx, dy) {
         lineE.setAttribute('transform', matrixToString(eMatrix));
         updateXY(lineE, dx, dy / 2);
     } else if (scalerId == 'sw') {
-        var rate = (getRadius(circle) - dx / 2) / getBaseRadius(circle);
+        var rate = (getRadius(roundRect) - dx / 2) / getBaseRadius(roundRect);
 
-        circleMatrix[0] = rate;
-        circleMatrix[3] = rate;
-        circleMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        circleMatrix[5] = getAbsoluteY(circle) + dy / 2;
-        newMatrix = matrixToString(circleMatrix);
-        circle.setAttribute('transform', newMatrix);
-        updateRadius(circle, -dx / 2);
+        roundRectMatrix[0] = rate;
+        roundRectMatrix[3] = rate;
+        roundRectMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        roundRectMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
+        newMatrix = matrixToString(roundRectMatrix);
+        roundRect.setAttribute('transform', newMatrix);
+        updateRadius(roundRect, -dx / 2);
 
         // change loop and terminal
         var loop = selectedElement.children[3];
-        updateHalfCircle(selectedElement, loop, getX(circle), getY(circle), getRadius(selectedElement.children[0]));
+        updateHalfCircle(selectedElement, loop, getX(roundRect), getY(roundRect), getRadius(selectedElement.children[0]));
 
         var terminal = selectedElement.children[4];
         var terminalMatrix = getMatrix(terminal);
 
         terminalMatrix[0] = rate;
         terminalMatrix[3] = rate;
-        terminalMatrix[4] = getAbsoluteX(circle) + dx / 2;
-        terminalMatrix[5] = getAbsoluteY(circle) + dy / 2;
+        terminalMatrix[4] = getAbsoluteX(roundRect) + dx / 2;
+        terminalMatrix[5] = getAbsoluteY(roundRect) + dy / 2;
         newMatrix = matrixToString(terminalMatrix);
         terminal.setAttribute('transform', newMatrix);
         updateRadius(terminal, -dx / 2);
@@ -322,7 +323,7 @@ var scale = function (dx, dy) {
         updateXY(lineE, 0, dy / 2);
     }
 
-    radiusInfo.html(getRadius(circle));
+    radiusInfo.html(getRadius(roundRect));
 };
 
 /**
@@ -335,8 +336,8 @@ var scaleTo = function (targetRadius) {
         return;
     }
     var mutator = selectedElement.children[2];
-    var circle = selectedElement.children[0];
-    var circleMatrix = getMatrix(circle);
+    var roundRect = selectedElement.children[0];
+    var roundRectMatrix = getMatrix(roundRect);
 
     // change scaler position
     var scaler = mutator.children[0];
@@ -352,14 +353,14 @@ var scaleTo = function (targetRadius) {
     var lineE = scaler.children[6];
     var lineS = scaler.children[7];
 
-    var dr = parseFloat(targetRadius) - getRadius(circle);
-    var rate = parseFloat(targetRadius) / getBaseRadius(circle);
+    var dr = parseFloat(targetRadius) - getRadius(roundRect);
+    var rate = parseFloat(targetRadius) / getBaseRadius(roundRect);
     
-    circleMatrix[0] = rate;
-    circleMatrix[3] = rate;
-    newMatrix = matrixToString(circleMatrix);
-    circle.setAttribute('transform', newMatrix);
-    updateRadius(circle, dr);
+    roundRectMatrix[0] = rate;
+    roundRectMatrix[3] = rate;
+    newMatrix = matrixToString(roundRectMatrix);
+    roundRect.setAttribute('transform', newMatrix);
+    updateRadius(roundRect, dr);
 
     var swMatrix = getMatrix(scalerSW);
     swMatrix[4] = getAbsoluteX(scalerSW) - dr;
@@ -414,7 +415,7 @@ var scaleTo = function (targetRadius) {
     updateXY(lineE, dr, 0);
 
     var loop = selectedElement.children[3];
-    updateHalfCircle(selectedElement, loop, getX(circle), getY(circle), getRadius(selectedElement.children[0]));
+    updateHalfCircle(selectedElement, loop, getX(roundRect), getY(roundRect), getRadius(selectedElement.children[0]));
 
     var terminal = selectedElement.children[4];
     var terminalMatrix = getMatrix(terminal);

@@ -91,6 +91,26 @@ var updateRadius = function (x, dx) {
 };
 
 /**
+ * Updates radius of object
+ * @param {object} x
+ * @param {width shift} dw
+ */
+var updateW = function (x, dw) {
+    var w = getW(x);
+    x.setAttribute("width", w + dw);
+};
+
+/**
+ * Updates radius of object
+ * @param {object} x
+ * @param {horizontal shift} dx
+ */
+var updateH = function (x, dh) {
+    var h = getH(x);
+    x.setAttribute("height", h + dh);
+};
+
+/**
  * Returns x position of object
  * @param {object} x 
  */
@@ -133,6 +153,38 @@ var getAbsoluteY = function (x) {
 var getRadius = function (x) {
     return parseFloat(x.getAttribute("radius"));
 };
+
+/**
+ * Returns the current w of object
+ * @param {object} x
+ */
+var getW = function(x){
+    return parseFloat(x.getAttribute('width'))
+}
+
+/**
+ * Returns the current h of object
+ * @param {object} x
+ */
+var getH = function(x){
+    return parseFloat(x.getAttribute('height'))
+}
+
+/**
+ * Returns the original w of object
+ * @param {object} x
+ */
+var getBaseW = function(x){
+    return parseFloat(x.getAttribute('origin-width'))
+}
+
+/**
+ * Returns the original h of object
+ * @param {object} x
+ */
+var getBaseH = function(x){
+    return parseFloat(x.getAttribute('origin-height'))
+}
 
 /**
  * Returns the original radius of object

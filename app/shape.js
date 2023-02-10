@@ -6,36 +6,42 @@
 var svgns = "http://www.w3.org/2000/svg"
 
 /**
- * Draws a circle
+ * Draws a rounded rectangle
  * @param {x position} x 
- * @param {y position} y 
- * @param {radius} radius 
+ * @param {y position} y
+ * @param {number} w
+ * @param {number} h
+ * @param {number} radius
  * @param {fill color} fill 
  * @param {stroke color} stroke 
  * @param {stroke width} strokeWidth 
  */
-var drawCircle = function (x, y, radius, fill, stroke, strokeWidth) {
-    var circle = document.createElementNS(svgns, 'circle');
-    circle.setAttribute('cx', x);
-    circle.setAttribute('cy', y);
-    circle.setAttribute('r', radius);
-    circle.setAttribute('fill', fill);
-    circle.setAttribute('stroke', stroke);
-    circle.setAttribute('stroke-width', strokeWidth);
+var drawRoundRect = function (x, y, w, h, radius, fill, stroke, strokeWidth) {
+    var roundRect = document.createElementNS(svgns, 'rect');
+    roundRect.setAttribute('x', x);
+    roundRect.setAttribute('y', y);
+    roundRect.setAttribute('width', w);
+    roundRect.setAttribute('height', h);
+    roundRect.setAttribute('rx', radius);
+    roundRect.setAttribute('fill', fill);
+    roundRect.setAttribute('stroke', stroke);
+    roundRect.setAttribute('stroke-width', strokeWidth);
     var tOrigin = x+'px'+' '+y+'px';
-    circle.setAttribute('transform-origin', tOrigin);
-    circle.setAttribute('transform', 'matrix(1 0 0 1 0 0)');
-    circle.style.MozTransformOrigin = tOrigin;
-    circle.style.webkitTransformOrigin = tOrigin;
-    circle.style.transformOrigin = tOrigin;
-    circle.style.msTransformOrigin = tOrigin;
-    circle.setAttribute('vector-effect', 'non-scaling-stroke');
-    circle.setAttribute('position-x', x);
-    circle.setAttribute('position-y', y);
-    circle.setAttribute('origin-x', x);
-    circle.setAttribute('origin-y', y);
-    circle.setAttribute('radius', radius);
-    return circle;
+    roundRect.setAttribute('transform-origin', tOrigin);
+    roundRect.setAttribute('transform', 'matrix(1 0 0 1 0 0)');
+    roundRect.style.MozTransformOrigin = tOrigin;
+    roundRect.style.webkitTransformOrigin = tOrigin;
+    roundRect.style.transformOrigin = tOrigin;
+    roundRect.style.msTransformOrigin = tOrigin;
+    roundRect.setAttribute('vector-effect', 'non-scaling-stroke');
+    roundRect.setAttribute('position-x', x);
+    roundRect.setAttribute('position-y', y);
+    roundRect.setAttribute('origin-x', x);
+    roundRect.setAttribute('origin-y', y);
+    roundRect.setAttribute('origin-width', w);
+    roundRect.setAttribute('origin-height', h);
+    roundRect.setAttribute('radius', radius);
+    return roundRect;
 };
 
 /**
